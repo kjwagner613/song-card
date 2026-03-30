@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KJW Music Player</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="./assets/KWJS.ico" />
+</head>
+
+<body>
+
+  <div class="player-container">
+    <div class="player-main">
+      <div class="lcd-display" id="lcdDisplay">
+        <span id="status">Paused</span><br />
+        <span id="current-song">No song playing</span><br />
+        <span id="playlist-name"></span>
+        <span id="playlist">Joanne's Playlist</span><br />
+        <select id="playlist-selector">
+          <option value="songs" selected>Kevin's Local</option>
+          <option value="joanneCloud">Joanne's SoundCloud</option>
+          <option value="kevinCloud">Kevin's SoundCloud</option>
+        </select>
+      </div>
+      <img class="player-image" src="assets/Music Player Head.png" usemap="#image-map" />
+      <map name="image-map">
+        <area alt="Previous" title="Previous" href="#" coords="58,260,34" shape="circle" data-action="prev" />
+        <area alt="Play" title="Play" href="#" coords="149,259,33" shape="circle" data-action="play" />
+        <area alt="Pause" title="Pause" href="#" coords="234,258,34" shape="circle" data-action="pause" />
+        <area alt="Next" title="Next" href="#" coords="327,256,32" shape="circle" data-action="next" />
+        <!-- <area alt="Song-List" title="Song-List" coords="217,892,496,1027" shape="rect" data-action="songlist" />
+      <area alt="Medallion" title="Medallion" coords="357,1296,198" shape="circle" data-action="medallion" /> -->
+      </map>
+
+      <audio id="audioPlayer" controls></audio>
+
+      <!-- Hidden SoundCloud widget for SoundCloud playlists -->
+      <div id="soundcloud-container" style="display: none; text-align: center;">
+        <iframe id="soundcloud-widget" width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
+          src=""></iframe>
+      </div>
+    </div>
+
+    <script src="https://w.soundcloud.com/player/api.js"></script>
+    <script src="songs-card.js"></script>
+    <script src="script.js"></script>
+
+    <a href="songlist.html" id="songList">Song
+      List</a>
+
+    <img id="pic80s" src="assets/newjukebox.jpg" />
+  </div>
+</body>
+
+</html>

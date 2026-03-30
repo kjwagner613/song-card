@@ -1,0 +1,15 @@
+//updated 03/30/2026
+const songs = [
+  {
+    name: "Afterloife",
+    artist: "Ingrid Michaelson",
+    file: "https://dl.dropboxusercontent.com/scl/fi/m5zlflcsk9dbkedhi8avf/12-Afterlife.mp3?rlkey=7363563a23lbv887vkwgywar4&st=0od9ni47&dl=0",
+    play: true,
+  },
+  {
+    name: "Everybody",
+    artist: "Ingrid Michaelson",
+    file: "https://dl.dropboxusercontent.com/scl/fi/qo41v4ueyqumtdjjlldio/02-Everybody.mp3?rlkey=ov1kx1swhrpxwt6g6z5snlesd&st=gob51mfz&dl=0",
+    play: true,
+  },
+];
