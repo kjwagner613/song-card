@@ -11,8 +11,7 @@ const songs = [
     artist: "Ingrid Michaelson",
     file: "https://dl.dropboxusercontent.com/scl/fi/qo41v4ueyqumtdjjlldio/02-Everybody.mp3?rlkey=ov1kx1swhrpxwt6g6z5snlesd&st=gob51mfz&dl=0",
     play: true,
-  },
-  
+  },  
   {
     name: "Incredible Love",
     artist: "Ingrid Michaelson",
