@@ -3,9 +3,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const statusDisplay = document.getElementById("status");
   statusDisplay.textContent = "Paused";
   const currentSongDisplay = document.getElementById("current-song");
-  const playerContainer = document.querySelector(".player-container");
   const playlistSelector = document.getElementById("playlist-selector");
   const playlistDisplay = document.getElementById("playlist");
+  const trackList = document.getElementById("track-list");
+  const trackCount = document.getElementById("track-count");
+  const cardTitle = document.getElementById("card-title");
+  const cardSubtitle = document.getElementById("card-subtitle");
+  const cardNote = document.getElementById("card-note");
+  const cardSender = document.getElementById("card-sender");
+  const cardRecipient = document.getElementById("card-recipient");
+  const transportButtons = document.querySelectorAll("[data-action]");
 
   let currentSongIndex = 0;
   let currentPlaylist = songs; // Default playlist
@@ -33,15 +40,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initialize playlist display
   playlistDisplay.textContent = playlistNames.songs; // Set default
-
-  // Debug: Check if playlist selector has all options
-  setTimeout(() => {
-    const options = playlistSelector.querySelectorAll('option');
-    console.log('Playlist options found:', options.length);
-    options.forEach((option, index) => {
-      console.log(`Option ${index}: ${option.value} - ${option.textContent}`);
-    });
-  }, 1000);
+  hydrateCardCopy();
+  renderTrackList();
 
   // Handle playlist selection
   playlistSelector.addEventListener('change', function () {
@@ -55,7 +55,55 @@ document.addEventListener("DOMContentLoaded", () => {
       // Switch to local mode
       switchToLocal(selectedPlaylist);
     }
+    renderTrackList();
   });
+
+  function hydrateCardCopy() {
+    if (typeof cardConfig === "undefined") return;
+    cardTitle.textContent = cardConfig.title || cardTitle.textContent;
+    cardSubtitle.textContent = cardConfig.subtitle || cardSubtitle.textContent;
+    cardNote.textContent = cardConfig.note || cardNote.textContent;
+    cardSender.textContent = cardConfig.sender || cardSender.textContent;
+    cardRecipient.textContent = cardConfig.recipient || cardRecipient.textContent;
+  }
+
+  function renderTrackList() {
+    if (!trackList || !trackCount) return;
+
+    if (currentPlaylistType === "soundcloud") {
+      trackCount.textContent = "Streaming";
+      trackList.innerHTML = `
+        <div class="track-item">
+          <div class="track-number">SC</div>
+          <div class="track-meta">
+            <strong>${playlistNames[playlistSelector.value]}</strong>
+            <span>Use the player controls to browse the SoundCloud set.</span>
+          </div>
+        </div>
+      `;
+      return;
+    }
+
+    trackCount.textContent = `${currentPlaylist.length} song${currentPlaylist.length === 1 ? "" : "s"}`;
+    trackList.innerHTML = "";
+
+    currentPlaylist.forEach((song, index) => {
+      const item = document.createElement("button");
+      item.type = "button";
+      item.className = `track-item${index === currentSongIndex ? " is-active" : ""}`;
+      item.innerHTML = `
+        <span class="track-number">${index + 1}</span>
+        <span class="track-meta">
+          <strong>${song.name}</strong>
+          <span>${song.artist}</span>
+        </span>
+      `;
+      item.addEventListener("click", () => {
+        playSong(index);
+      });
+      trackList.appendChild(item);
+    });
+  }
 
   function switchToLocal(playlistKey) {
     currentPlaylistType = 'local';
@@ -69,7 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Hide SoundCloud widget, show audio player
     document.getElementById('soundcloud-container').style.display = 'none';
-    document.getElementById('audioPlayer').style.display = 'none';
+    document.getElementById('audioPlayer').style.display = 'block';
 
     // Find first playable song in playlist
     let firstPlayableIndex = 0;
@@ -82,7 +130,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Load the first song but don't auto-play
     playSong(firstPlayableIndex, false);
-  } function switchToSoundCloud(playlistKey) {
+    renderTrackList();
+  }
+
+  function switchToSoundCloud(playlistKey) {
     currentPlaylistType = 'soundcloud';
     currentSongIndex = 0;
 
@@ -117,6 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
     soundcloudWidget = SC.Widget(iframe);
     soundcloudWidget.bind(SC.Widget.Events.READY, function () {
       updateStatusForSoundCloud();
+      renderTrackList();
     });
 
     soundcloudWidget.bind(SC.Widget.Events.PLAY, function () {
@@ -142,13 +194,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  document.querySelectorAll('area[data-action]').forEach(area => {
-    area.addEventListener('click', function (event) {
-      event.preventDefault();
+  transportButtons.forEach(button => {
+    button.addEventListener('click', function () {
       const action = this.getAttribute('data-action');
 
       if (currentPlaylistType === 'soundcloud' && soundcloudWidget) {
-        // Handle SoundCloud controls
         switch (action) {
           case 'prev':
             soundcloudWidget.prev();
@@ -162,18 +212,10 @@ document.addEventListener("DOMContentLoaded", () => {
           case 'next':
             soundcloudWidget.next();
             break;
-          case 'songlist':
-            localStorage.setItem("currentPlaylistKey", playlistSelector.value);
-            window.location.href = 'songlist.html';
-            break;
-          case 'medallion':
-            alert('Medallion feature coming soon!');
-            break;
           default:
             console.warn('Unknown action:', action);
         }
       } else {
-        // Handle local file controls
         switch (action) {
           case 'prev':
             playPrevSong();
@@ -186,13 +228,6 @@ document.addEventListener("DOMContentLoaded", () => {
             break;
           case 'next':
             playNextSong();
-            break;
-          case 'songlist':
-            localStorage.setItem("currentPlaylistKey", playlistSelector.value);
-            window.location.href = 'songlist.html';
-            break;
-          case 'medallion':
-            alert('Medallion feature coming soon!');
             break;
           default:
             console.warn('Unknown action:', action);
@@ -215,6 +250,7 @@ document.addEventListener("DOMContentLoaded", () => {
       updateStatus("Paused", currentPlaylist[index].name);
     }
     currentSongIndex = index;
+    renderTrackList();
   }
 
   function updateStatus(status, songName) {
@@ -290,72 +326,14 @@ document.addEventListener("DOMContentLoaded", () => {
     playSong(0);
   }
 
-  // Responsive image map functionality
-  function makeImageMapResponsive() {
-    const img = document.querySelector('img[usemap="#image-map"]');
-    const map = document.querySelector('map[name="image-map"]');
-    if (!img || !map) return;
-    const areas = map.querySelectorAll('area');
-
-    if (!img || !areas.length) return;
-
-    if (!img.naturalWidth || !img.naturalHeight) return;
-
-    areas.forEach(area => {
-      if (!area.hasAttribute('data-original-coords')) {
-        area.setAttribute('data-original-coords', area.getAttribute('coords'));
-      }
-    });
-
-    const scaleX = img.clientWidth / img.naturalWidth;
-    const scaleY = img.clientHeight / img.naturalHeight;
-    const circleScale = Math.min(scaleX, scaleY);
-
-    areas.forEach(area => {
-      const originalCoords = area.getAttribute('data-original-coords').split(',').map(Number);
-      const shape = area.getAttribute('shape');
-
-      if (shape === 'circle') {
-        const newCoords = [
-          Math.round(originalCoords[0] * scaleX),
-          Math.round(originalCoords[1] * scaleY),
-          Math.round(originalCoords[2] * circleScale)
-        ];
-        area.setAttribute('coords', newCoords.join(','));
-      } else if (shape === 'rect') {
-        const newCoords = [
-          Math.round(originalCoords[0] * scaleX),
-          Math.round(originalCoords[1] * scaleY),
-          Math.round(originalCoords[2] * scaleX),
-          Math.round(originalCoords[3] * scaleY)
-        ];
-        area.setAttribute('coords', newCoords.join(','));
-      }
-    });
-  }
-
   function syncBottomImageHeight() {
-    const playerHeadImage = document.querySelector('img[usemap="#image-map"]');
     const bottomImage = document.getElementById('pic80s');
-    if (!playerHeadImage || !bottomImage) return;
-    if (!playerHeadImage.clientHeight) return;
-    bottomImage.style.height = `${playerHeadImage.clientHeight}px`;
-    bottomImage.style.width = 'auto';
+    if (!bottomImage) return;
+    bottomImage.style.height = '74px';
+    bottomImage.style.width = '74px';
   }
 
   // Call on load and resize
-  makeImageMapResponsive();
   syncBottomImageHeight();
-  window.addEventListener('resize', makeImageMapResponsive);
   window.addEventListener('resize', syncBottomImageHeight);
-
-  // Also call after image loads to ensure proper scaling
-  const playerImage = document.querySelector('img[usemap="#image-map"]');
-  if (playerImage) {
-    playerImage.addEventListener('load', () => {
-      makeImageMapResponsive();
-      syncBottomImageHeight();
-    });
-  }
-
 });

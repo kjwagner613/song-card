@@ -1,7 +1,16 @@
-//updated 03/30/2026
+// updated 03/30/2026
+const cardConfig = {
+  title: "For Late-Night Listening",
+  subtitle: "A tiny audio card with a couple songs worth sending.",
+  note:
+    "Just press play,  and let the songs do the talking.",
+  sender: "Kevin",
+  recipient: "Princess Joanne",
+};
+
 const songs = [
   {
-    name: "Afterloife",
+    name: "Afterlife",
     artist: "Ingrid Michaelson",
     file: "https://dl.dropboxusercontent.com/scl/fi/m5zlflcsk9dbkedhi8avf/12-Afterlife.mp3?rlkey=7363563a23lbv887vkwgywar4&st=0od9ni47&dl=0",
     play: true,
@@ -19,6 +28,5 @@ const songs = [
     play: true,
   },
 ];
-
 
 

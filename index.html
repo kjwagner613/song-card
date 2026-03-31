@@ -10,48 +10,87 @@
 </head>
 
 <body>
+  <div class="page-shell">
+    <div class="page-orb page-orb-left"></div>
+    <div class="page-orb page-orb-right"></div>
 
-  <div class="player-container">
-    <div class="player-main">
-      <div class="lcd-display" id="lcdDisplay">
-        <span id="status">Paused</span><br />
-        <span id="current-song">No song playing</span><br />
-        <span id="playlist-name"></span>
-        <span id="playlist">Joanne's Playlist</span><br />
-        <select id="playlist-selector">
-          <option value="songs" selected>Kevin's Local</option>
-          <option value="joanneCloud">Joanne's SoundCloud</option>
-          <option value="kevinCloud">Kevin's SoundCloud</option>
-        </select>
-      </div>
-      <img class="player-image" src="assets/Music Player Head.png" usemap="#image-map" />
-      <map name="image-map">
-        <area alt="Previous" title="Previous" href="#" coords="58,260,34" shape="circle" data-action="prev" />
-        <area alt="Play" title="Play" href="#" coords="149,259,33" shape="circle" data-action="play" />
-        <area alt="Pause" title="Pause" href="#" coords="234,258,34" shape="circle" data-action="pause" />
-        <area alt="Next" title="Next" href="#" coords="327,256,32" shape="circle" data-action="next" />
-        <!-- <area alt="Song-List" title="Song-List" coords="217,892,496,1027" shape="rect" data-action="songlist" />
-      <area alt="Medallion" title="Medallion" coords="357,1296,198" shape="circle" data-action="medallion" /> -->
-      </map>
+    <main class="player-container">
+      <section class="card-hero">
+        <p class="eyebrow">Audio Card</p>
+        <h1 id="card-title">KJW Music Player</h1>
+        <p class="card-subtitle" id="card-subtitle">A small player for sending a song.</p>
+      </section>
 
-      <audio id="audioPlayer" controls></audio>
+      <section class="player-main">
+        <div class="player-frame">
+          <div class="player-stage">
+            <div class="lcd-display" id="lcdDisplay">
+              <span id="status">Paused</span><br />
+              <span id="current-song">No song playing</span><br />
+              <span class="playlist-label">Playlist</span>
+              <span id="playlist">Kevin's Local</span>
+            </div>
 
-      <!-- Hidden SoundCloud widget for SoundCloud playlists -->
-      <div id="soundcloud-container" style="display: none; text-align: center;">
-        <iframe id="soundcloud-widget" width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
-          src=""></iframe>
-      </div>
-    </div>
+            <div class="transport-controls" aria-label="Player controls">
+              <button type="button" class="transport-btn" data-action="prev" aria-label="Previous song">Prev</button>
+              <button type="button" class="transport-btn transport-btn-primary" data-action="play"
+                aria-label="Play current song">Play</button>
+              <button type="button" class="transport-btn" data-action="pause" aria-label="Pause current song">Pause</button>
+              <button type="button" class="transport-btn" data-action="next" aria-label="Next song">Next</button>
+            </div>
 
-    <script src="https://w.soundcloud.com/player/api.js"></script>
-    <script src="songs-card.js"></script>
-    <script src="script.js"></script>
+            <audio id="audioPlayer" controls></audio>
 
-    <a href="songlist.html" id="songList">Song
-      List</a>
+            <div id="soundcloud-container" style="display: none; text-align: center;">
+              <iframe id="soundcloud-widget" width="100%" height="166" scrolling="no" frameborder="no"
+                allow="autoplay" src=""></iframe>
+            </div>
+          </div>
+        </div>
 
-    <img id="pic80s" src="assets/KWJS.ico" />
+        <div class="player-aside">
+          <p class="player-aside-label">Now Playing</p>
+          <p class="player-aside-text"></p>
+          <img id="pic80s" src="assets/KWJS.ico" alt="KJW badge" />
+        </div>
+      </section>
+
+      <section class="card-copy">
+        <div class="card-note">
+          <p id="card-note">
+            I love you!!
+          </p>
+          <p class="card-signoff">
+            From: <span id="card-sender">Kevin</span><span style="margin-left: 50px;"> To: </span> <span id="card-recipient"></span>
+          </p>
+        </div>
+
+        <div class="track-panel">
+          <div class="track-panel-header">
+            <span>Tracks</span>
+            <span id="track-count">0 songs</span>
+          </div>
+          <div id="track-list" class="track-list"></div>
+        </div>
+
+        <div class="card-actions">
+          <a href="songlist.html" id="songList">Edit Song List</a>
+          <label class="playlist-picker" for="playlist-selector">
+            <span>Source</span>
+            <select id="playlist-selector">
+              <option value="songs" selected>Kevin's Local</option>
+              <option value="joanneCloud">Joanne's SoundCloud</option>
+              <option value="kevinCloud">Kevin's SoundCloud</option>
+            </select>
+          </label>
+        </div>
+      </section>
+    </main>
   </div>
+
+  <script src="https://w.soundcloud.com/player/api.js"></script>
+  <script src="songs-card.js"></script>
+  <script src="script.js"></script>
 </body>
 
 </html>
