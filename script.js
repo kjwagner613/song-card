@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const playlistNames = {
-    songs: "Kevin's Local",
+    songs: "Local",
     joanneCloud: "Joanne's SoundCloud",
     kevinCloud: "Kevin's SoundCloud"
   };
