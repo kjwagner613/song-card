@@ -1,6 +1,6 @@
 // updated 03/30/2026
 const cardConfig = {
-  title: "For Late-Night Listening",
+  title: "Comfort Music",
   subtitle: "A tiny audio card with a couple songs worth sending.",
   note:
     "Just press play,  and let the songs do the talking.",
