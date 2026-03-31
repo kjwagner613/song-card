@@ -441,18 +441,14 @@ body {
   .transport-controls {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .player-aside {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 /* Secondary Art Panel */
-#pic80s {
-  display: block;
-  width: 74px;
-  height: 74px;
-  object-fit: cover;
-  border-radius: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
 .player-aside {
   display: flex;
   align-items: center;
@@ -461,12 +457,50 @@ body {
   padding: 1rem;
 }
 
+.player-aside-copy {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.player-aside-text[hidden] {
+  display: none;
+}
+
+.player-aside-text {
+  font-size: 0.95rem;
+}
+
+.player-aside-text p {
+  margin: 0;
+}
+
 .player-aside-label {
   margin: 0 0 0.3rem;
   text-transform: uppercase;
   letter-spacing: 0.18em;
   font-size: 0.74rem;
   color: var(--accent);
+}
+
+.medallion-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.medallion {
+  display: block;
+  width: 74px;
+  height: 74px;
+  object-fit: cover;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.medallion-round {
+  border-radius: 999px;
 }
 
 /* Song List CTA */

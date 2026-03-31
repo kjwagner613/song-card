@@ -6,6 +6,7 @@ const cardConfig = {
     "Just press play,  and let the songs do the talking.",
   sender: "Kevin",
   recipient: "Princess Joanne",
+  senderAsideHtml: "",
 };
 
 const songs = [
@@ -28,5 +29,4 @@ const songs = [
     play: true,
   },
 ];
-
 

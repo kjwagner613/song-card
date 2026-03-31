@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const cardTitle = document.getElementById("card-title");
   const cardSubtitle = document.getElementById("card-subtitle");
   const cardNote = document.getElementById("card-note");
+  const senderAside = document.getElementById("sender-aside");
   const cardSender = document.getElementById("card-sender");
   const cardRecipient = document.getElementById("card-recipient");
   const transportButtons = document.querySelectorAll("[data-action]");
@@ -63,6 +64,15 @@ document.addEventListener("DOMContentLoaded", () => {
     cardTitle.textContent = cardConfig.title || cardTitle.textContent;
     cardSubtitle.textContent = cardConfig.subtitle || cardSubtitle.textContent;
     cardNote.textContent = cardConfig.note || cardNote.textContent;
+    if (senderAside) {
+      if (cardConfig.senderAsideHtml) {
+        senderAside.innerHTML = cardConfig.senderAsideHtml;
+        senderAside.hidden = false;
+      } else {
+        senderAside.innerHTML = "";
+        senderAside.hidden = true;
+      }
+    }
     cardSender.textContent = cardConfig.sender || cardSender.textContent;
     cardRecipient.textContent = cardConfig.recipient || cardRecipient.textContent;
   }
