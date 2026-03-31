@@ -27,6 +27,12 @@ const songs = [
     artist: "Ingrid Michaelson",
     file: "https://dl.dropboxusercontent.com/scl/fi/owd2m0xdvjw9vn3lfgd8a/05-Incredible-Love.mp3?rlkey=c3y1mmiyh1dlol6w23ylzetaz&st=09bsyaua&dl=0",
     play: true,
+  },   
+  {
+    name: "Can't Take My Eyes Off You",
+    artist: "Frankie Valli",
+    file: "https://dl.dropboxusercontent.com/scl/fi/qkbys0r8a2un18xh972h6/Frankie-Valli-Can-t-Take-My-Eyes-Off-You-Lyrics.mp3?rlkey=y91ybymrjr700evqfvrynxdzr&st=qz9ihdjs&dl=0",
+    play: true,
   },
 ];
 
